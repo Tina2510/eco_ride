@@ -1,0 +1,7 @@
+hub_name,vehicle_type,vehicle_id,model,battery_percentage,maintenance_status,rental_price,seating_capacity,max_speed_limit
+Downtown,ElectricCar,C001,Tesla Model 3,90,Available,15.0,4,
+Downtown,ElectricCar,C002,Nissan Leaf,75,On Trip,12.0,4,
+Downtown,ElectricCar,C003,Chevy Bolt,80,Available,14.0,4,
+Airport,ElectricScooter,S001,Xiaomi M365,85,Available,3.0,,25
+Airport,ElectricScooter,S002,Segway Ninebot,95,Under Maintenance,4.0,,30
+Airport,ElectricScooter,S003,Ola S1,70,On Trip,3.5,,28
