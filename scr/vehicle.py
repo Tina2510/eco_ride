@@ -20,14 +20,14 @@ class Vehicle(ABC):
         )
         
     @property
-    def battery_precentage(self):
-        return self.battery_precentage
-    @battery_precentage.setter
-    def battery_precentage(self,value):
+    def battery_percentage(self):
+        return self.__battery_percentage
+    @battery_percentage.setter
+    def battery_percentage(self,value):
         if 0 <= value <= 100:
-            self.__battery_precentage = value
+            self.__battery_percentage = value
         else:
-            print("Battery precentage should be in between 0 and 100")
+            print("Battery percentage should be in between 0 and 100")
 
     @property
     def maintenance_status(self):
