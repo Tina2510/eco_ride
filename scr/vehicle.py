@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+import csv
+
 class Vehicle(ABC):
     def __init__(self,vehicle_id,model,battery_percentage,maintenance_status,rental_price):
         self.vehicle_id = vehicle_id
@@ -178,3 +180,56 @@ def sort_vehicles_by_rental_price(hub_name, descending=False):
         key=lambda v: v.rental_price,
         reverse=descending
     )
+
+
+def save_fleet_to_csv(filename="fleet.csv"):
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([
+            "hub_name", "vehicle_type", "vehicle_id", "model",
+            "battery_percentage", "maintenance_status", "rental_price",
+            "seating_capacity", "max_speed_limit"
+        ])
+        for hub_name, vehicles in hubs.items():
+            for v in vehicles:
+                if isinstance(v, ElectricCar):
+                    writer.writerow([
+                        hub_name, "ElectricCar", v.vehicle_id, v.model,
+                        v.battery_percentage, v.maintenance_status, v.rental_price,
+                        v.seating_capacity, ""
+                    ])
+                elif isinstance(v, ElectricScooter):
+                    writer.writerow([
+                        hub_name, "ElectricScooter", v.vehicle_id, v.model,
+                        v.battery_percentage, v.maintenance_status, v.rental_price,
+                        "", v.max_speed_limit
+                    ])
+    print(f"Fleet saved to {filename}.")
+
+
+def load_fleet_from_csv(filename="fleet.csv"):
+    try:
+        with open(filename, mode="r", newline="") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                hub_name = row["hub_name"]
+                vehicle_type = row["vehicle_type"]
+                vehicle_id = row["vehicle_id"]
+                model = row["model"]
+                battery_percentage = float(row["battery_percentage"])
+                maintenance_status = row["maintenance_status"]
+                rental_price = float(row["rental_price"])
+
+                if vehicle_type == "ElectricCar":
+                    seating_capacity = int(row["seating_capacity"])
+                    vehicle = ElectricCar(vehicle_id, model, battery_percentage, maintenance_status, rental_price, seating_capacity)
+                elif vehicle_type == "ElectricScooter":
+                    max_speed_limit = int(row["max_speed_limit"])
+                    vehicle = ElectricScooter(vehicle_id, model, battery_percentage, maintenance_status, rental_price, max_speed_limit)
+
+                if hub_name not in hubs:
+                    hubs[hub_name] = []
+                hubs[hub_name].append(vehicle)
+        print(f"Fleet loaded from {filename}.")
+    except FileNotFoundError:
+        print(f"No CSV file found at {filename}. Starting fresh fleet.")
