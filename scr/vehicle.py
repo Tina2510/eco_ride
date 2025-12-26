@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import csv
+import json
 
 class Vehicle(ABC):
     def __init__(self,vehicle_id,model,battery_percentage,maintenance_status,rental_price):
@@ -20,6 +21,15 @@ class Vehicle(ABC):
             f"Status: {self.maintenance_status}, "
             f"Price: {self.rental_price}"
         )
+    def to_dict(self):
+        return {
+            "vehicle_id": self.vehicle_id,
+            "model": self.model,
+            "battery_percentage": self.__battery_percentage,
+            "maintenance_status": self.maintenance_status,
+            "rental_price": self.rental_price
+    }
+
         
     @property
     def battery_percentage(self):
@@ -63,6 +73,13 @@ class ElectricCar(Vehicle):
         base_fare = 5.0
         per_km  = 0.5
         return base_fare + (per_km * distance)
+    
+    def to_dict(self):
+        data = super().to_dict()
+        data["vehicle_type"] = "ElectricCar"
+        data["seating_capacity"] = self.seating_capacity
+        return data
+
 
                 
 
@@ -75,6 +92,13 @@ class ElectricScooter(Vehicle):
         base_fare = 1.0
         per_min = 0.15
         return base_fare + (per_min * min)
+    
+    def to_dict(self):
+        data = super().to_dict()
+        data["vehicle_type"] = "ElectricScooter"
+        data["max_speed_limit"] = self.max_speed_limit
+        return data
+
 
 hubs = {}
 
@@ -233,3 +257,52 @@ def load_fleet_from_csv(filename="fleet.csv"):
         print(f"Fleet loaded from {filename}.")
     except FileNotFoundError:
         print(f"No CSV file found at {filename}. Starting fresh fleet.")
+
+def save_fleet_to_json(filename="fleet.json"):
+    data = {}
+
+    for hub_name, vehicles in hubs.items():
+        data[hub_name] = [v.to_dict() for v in vehicles]
+
+    with open(filename, "w") as file:
+        json.dump(data, file, indent=4)
+
+    print(f"Fleet saved to {filename}.")
+
+def load_fleet_from_json(filename="fleet.json"):
+    try:
+        with open(filename, "r") as file:
+            data = json.load(file)
+
+        hubs.clear()
+
+        for hub_name, vehicles in data.items():
+            hubs[hub_name] = []
+
+            for v in vehicles:
+                if v["vehicle_type"] == "ElectricCar":
+                    vehicle = ElectricCar(
+                        v["vehicle_id"],
+                        v["model"],
+                        v["battery_percentage"],
+                        v["maintenance_status"],
+                        v["rental_price"],
+                        v["seating_capacity"]
+                    )
+
+                elif v["vehicle_type"] == "ElectricScooter":
+                    vehicle = ElectricScooter(
+                        v["vehicle_id"],
+                        v["model"],
+                        v["battery_percentage"],
+                        v["maintenance_status"],
+                        v["rental_price"],
+                        v["max_speed_limit"]
+                    )
+
+                hubs[hub_name].append(vehicle)
+
+        print(f"Fleet loaded from {filename}.")
+
+    except FileNotFoundError:
+        print(f"No JSON file found at {filename}. Starting fresh fleet.")
