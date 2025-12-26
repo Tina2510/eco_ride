@@ -1,0 +1,60 @@
+{
+    "Downtown": [
+        {
+            "vehicle_id": "C001",
+            "model": "Tesla Model 3",
+            "battery_percentage": 90.0,
+            "maintenance_status": "Available",
+            "rental_price": 15.0,
+            "vehicle_type": "ElectricCar",
+            "seating_capacity": 4
+        },
+        {
+            "vehicle_id": "C002",
+            "model": "Nissan Leaf",
+            "battery_percentage": 75.0,
+            "maintenance_status": "On Trip",
+            "rental_price": 12.0,
+            "vehicle_type": "ElectricCar",
+            "seating_capacity": 4
+        },
+        {
+            "vehicle_id": "C003",
+            "model": "Chevy Bolt",
+            "battery_percentage": 80.0,
+            "maintenance_status": "Available",
+            "rental_price": 14.0,
+            "vehicle_type": "ElectricCar",
+            "seating_capacity": 4
+        }
+    ],
+    "Airport": [
+        {
+            "vehicle_id": "S001",
+            "model": "Xiaomi M365",
+            "battery_percentage": 85.0,
+            "maintenance_status": "Available",
+            "rental_price": 3.0,
+            "vehicle_type": "ElectricScooter",
+            "max_speed_limit": 25
+        },
+        {
+            "vehicle_id": "S002",
+            "model": "Segway Ninebot",
+            "battery_percentage": 95.0,
+            "maintenance_status": "Under Maintenance",
+            "rental_price": 4.0,
+            "vehicle_type": "ElectricScooter",
+            "max_speed_limit": 30
+        },
+        {
+            "vehicle_id": "S003",
+            "model": "Ola S1",
+            "battery_percentage": 70.0,
+            "maintenance_status": "On Trip",
+            "rental_price": 3.5,
+            "vehicle_type": "ElectricScooter",
+            "max_speed_limit": 28
+        }
+    ]
+}
