@@ -36,10 +36,10 @@ class Vehicle(ABC):
         return self.__battery_percentage
     @battery_percentage.setter
     def battery_percentage(self,value):
-        if 0 <= value <= 100:
+        if 0 < value <= 100:
             self.__battery_percentage = value
         else:
-            print("Battery percentage should be in between 0 and 100")
+            raise ValueError ("Battery percentage should be in between 0 and 100")
 
     @property
     def maintenance_status(self):
@@ -58,7 +58,7 @@ class Vehicle(ABC):
         if price >=0 :
             self.__rental_price = price
         else:
-            print("rental price cannot be negative.") 
+           raise ValueError ("rental price cannot be negative.") 
 
     @abstractmethod
     def calculate_trip_cost(self,value):   
@@ -67,7 +67,7 @@ class Vehicle(ABC):
 class ElectricCar(Vehicle):
     def __init__(self, vehicle_id, model, battery_precentage, maintenance_status, rental_price,seating_capacity):
         super().__init__(vehicle_id, model, battery_precentage, maintenance_status, rental_price)
-        self.seating_capacity = seating_capacity
+        self.seating_capacity = seating_capacity     
 
     def calculate_trip_cost(self, distance):
         base_fare = 5.0
