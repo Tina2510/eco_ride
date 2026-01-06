@@ -228,6 +228,7 @@ def save_fleet_to_csv(filename="fleet.csv"):
                         v.battery_percentage, v.maintenance_status, v.rental_price,
                         "", v.max_speed_limit
                     ])
+                    
     print(f"Fleet saved to {filename}.")
 
 
@@ -243,7 +244,7 @@ def load_fleet_from_csv(filename="fleet.csv"):
                 battery_percentage = float(row["battery_percentage"])
                 maintenance_status = row["maintenance_status"]
                 rental_price = float(row["rental_price"])
-
+                print(f" --->{row}")
                 if vehicle_type == "ElectricCar":
                     seating_capacity = int(row["seating_capacity"])
                     vehicle = ElectricCar(vehicle_id, model, battery_percentage, maintenance_status, rental_price, seating_capacity)
